@@ -28,14 +28,14 @@ def verify_token(token):
 @app.route('/', methods=['POST'])
 def generate_content():
     try:
-        # 从查询参数或请求体中获取令牌
+        # 从请求体中获取令牌
         token = request.headers.get('Authorization')
 
         # 验证令牌
         if not token or not verify_token(token):
             return "Unauthorized", 401
 
-        # 从请求体或URL参数中提取文本
+        # 从请求体中提取文本
         text = request.json.get('text', '')
 
         # 准备用于POST请求的数据
