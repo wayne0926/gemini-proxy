@@ -25,18 +25,18 @@ def verify_token(token):
     return token == SECRET_KEY
 
 # 定义根路由，接受GET和POST请求
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['POST'])
 def generate_content():
     try:
         # 从查询参数或请求体中获取令牌
-        token = request.args.get('token') or request.json.get('token')
+        token = request.headers.get('Authorization')
 
         # 验证令牌
         if not token or not verify_token(token):
             return "Unauthorized", 401
 
         # 从请求体或URL参数中提取文本
-        text = request.json.get('text') or request.args.get('text', '')
+        text = request.json.get('text', '')
 
         # 准备用于POST请求的数据
         data = {
